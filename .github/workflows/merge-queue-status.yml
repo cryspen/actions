@@ -1,0 +1,21 @@
+name: Report status for merge queue
+# Pass in the ${{toJSON(needs)}} of the caller and report if all of
+# the caller's required jobs were successful or skipped.
+
+on:
+  workflow_call:
+    inputs:
+      needs:
+        required: true
+        type: String
+
+jobs:
+  mq-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Transform job outcomes
+        run: |
+          echo "ALL_SUCCESS=$(echo "$NEEDS_JSON" | jq '. | to_entries | map([.value.result == "success", .value.result == "skipped"] | any) | all')" >> $GITHUB_ENV
+      - name: Check outcomes
+        id: result
+        run: "[ $ALL_SUCCESS == true ]"
