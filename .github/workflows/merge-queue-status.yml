@@ -7,7 +7,7 @@ on:
     inputs:
       needs_json:
         required: true
-        type: String
+        type: string
 
 jobs:
   mq-status:
