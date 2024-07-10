@@ -11,6 +11,9 @@ on:
 
 jobs:
   mq-status:
+    defaults:
+      run:
+        shell: bash
     runs-on: ubuntu-latest
     steps:
       - name: Transform job outcomes
@@ -18,4 +21,5 @@ jobs:
           echo "ALL_SUCCESS=$(echo "${{ inputs.needs_json }}" | jq '. | to_entries | map([.value.result == "success", .value.result == "skipped"] | any) | all')" >> $GITHUB_ENV
       - name: Check outcomes
         id: result
-        run: "[ $ALL_SUCCESS == true ]"
+        run: |
+          [[ $ALL_SUCCESS == true ]]
