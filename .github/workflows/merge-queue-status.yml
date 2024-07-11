@@ -16,10 +16,7 @@ jobs:
         shell: bash
     runs-on: ubuntu-latest
     steps:
-      - name: Transform job outcomes
+      - name: Check job outcomes
         run: |
-          echo "ALL_SUCCESS=$(echo "${{ inputs.needs_json }}" | jq '. | to_entries | map([.value.result == "success", .value.result == "skipped"] | any) | all')" >> $GITHUB_ENV
-      - name: Check outcomes
-        id: result
-        run: |
-          [[ $ALL_SUCCESS == true ]]
+          echo "ALL_SUCCESS=$(echo "${{ inputs.needs_json }}" | jq --exit-status '. | to_entries | map([.value.result == "success", .value.result == "skipped"] | any) | all')"
+
