@@ -6,7 +6,6 @@ on:
 jobs:
   test-action:
     runs-on: self-hosted
-    container: ghcr.io/nixos/nix
     steps:
       - uses: actions/checkout@v4
       - uses: cryspen/actions/hax@franziskus/hax
