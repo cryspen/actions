@@ -1,0 +1,19 @@
+name: test hax
+
+on:
+  push:
+
+jobs:
+  test-action:
+    runs-on: self-hosted
+    container: ghcr.io/nixos/nix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cryspen/actions/hax@franziskus/hax
+        with:
+          fstar: v2024.12.03
+      - run: |
+          echo "F* version"
+          fstar.exe --version
+          echo "hax version"
+          cargo hax --version
