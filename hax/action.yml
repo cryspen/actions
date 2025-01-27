@@ -14,7 +14,7 @@ runs:
   steps:
     - uses: DeterminateSystems/nix-installer-action@main
     - name: Install & configure Cachix
-      if: runner.name != 'cryspen-dev'
+      if: runner.name == 'ubuntu-latest'
       shell: bash
       run: |
         nix-env --quiet -j8 -iA cachix -f https://cachix.org/api/v1/install
